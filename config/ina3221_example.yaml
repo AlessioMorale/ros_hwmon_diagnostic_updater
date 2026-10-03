@@ -1,0 +1,36 @@
+# INA3221 on I2C bus 1, address 0x40, battery on channel 1.
+# Kernel units: in1-3 mV, in4-6 uV, curr1-4 mA.
+hwmon_diagnostic_updater_node:
+  ros__parameters:
+    update_rate_hz: 2.0
+    battery_topic: /battery_state
+    sensors: [ina3221]
+
+    ina3221:
+      base_path: /sys/bus/i2c/devices/1-0040   # resolved to .../hwmon/hwmonN
+      # init_writes: ["shunt1_resistor=20000"]   # shunt in micro-ohm, if not set by device tree
+      metrics: [bus_voltage_ch1, shunt_voltage_ch1, current_ch1]
+
+      bus_voltage_ch1:
+        file: in1_input
+        scale: 0.001          # mV -> V
+        battery_field: voltage
+        warn_min: 10.5
+        warn_max: 13.0
+        error_min: 10.0
+        error_max: 14.0
+
+      shunt_voltage_ch1:
+        file: in4_input
+        scale: 0.000001       # uV -> V
+        warn_min: -0.1
+        warn_max: 0.1
+        error_min: -0.2
+        error_max: 0.2
+
+      current_ch1:
+        file: curr1_input
+        scale: 0.001          # mA -> A
+        battery_field: current
+        warn_max: 100.0
+        error_max: 150.0

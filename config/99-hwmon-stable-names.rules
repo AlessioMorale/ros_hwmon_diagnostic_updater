@@ -1,0 +1,19 @@
+# udev rules for stable hwmon device names
+# Place this file in /etc/udev/rules.d/99-hwmon-stable-names.rules
+
+# INA3221 Power Monitor - Main Battery
+# Match by I2C bus and address to create stable symlink
+SUBSYSTEM=="hwmon", DEVPATH=="*/i2c-*/0-0040/hwmon/hwmon*", SYMLINK+="hwmon-battery-main"
+
+# INA3221 Power Monitor - Auxiliary Supply (example for second device)
+# SUBSYSTEM=="hwmon", DEVPATH=="*/i2c-*/0-0041/hwmon/hwmon*", SYMLINK+="hwmon-aux-supply"
+
+# Alternative: Match by device name in sysfs
+# SUBSYSTEM=="hwmon", ATTR{name}=="ina3221", SYMLINK+="hwmon-ina3221"
+
+# After creating this file, reload udev rules:
+# sudo udevadm control --reload-rules
+# sudo udevadm trigger
+
+# Then use in configuration:
+# base_path: /dev/hwmon-battery-main

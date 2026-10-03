@@ -1,0 +1,52 @@
+# Build directories
+build/
+install/
+log/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeUserPresets.json
+cmake_install.cmake
+compile_commands.json
+
+# Generated files
+*.o
+*.a
+*.so
+*.deb
+
+# IDE
+.vscode/
+.idea/
+*.user
+*.cbp
+
+# ROS
+devel/
+*.egg-info/
+dist/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Testing
+.coverage
+coverage.xml
+htmlcov/
+
+# Colcon
+COLCON_IGNORE
+colcon_build.rc
+colcon_command_prefix*.sh
+colcon_command_prefix*.sh.env

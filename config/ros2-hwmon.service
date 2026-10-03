@@ -1,0 +1,45 @@
+[Unit]
+Description=ROS 2 Hardware Monitor Diagnostic Node
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=robot
+Group=robot
+WorkingDirectory=/home/robot/ros_ws
+
+# Source ROS environment and launch node
+ExecStart=/bin/bash -c 'source /opt/ros/lyrical/setup.bash && source /home/robot/ros_ws/install/setup.bash && ros2 launch hwmon_diagnostic_updater hwmon_diagnostic_updater.launch.py'
+
+# Restart on failure
+Restart=on-failure
+RestartSec=5s
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ros2-hwmon
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Resource limits
+LimitNOFILE=65536
+MemoryLimit=512M
+
+[Install]
+WantedBy=multi-user.target
+
+# Installation instructions:
+# 1. Copy this file to /etc/systemd/system/ros2-hwmon.service
+# 2. Adjust paths and user/group as needed
+# 3. Enable the service:
+#    sudo systemctl daemon-reload
+#    sudo systemctl enable ros2-hwmon.service
+#    sudo systemctl start ros2-hwmon.service
+# 4. Check status:
+#    sudo systemctl status ros2-hwmon.service
+# 5. View logs:
+#    sudo journalctl -u ros2-hwmon.service -f

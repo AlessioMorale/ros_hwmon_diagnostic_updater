@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  hwmon_diagnostic_updater:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: hwmon_diagnostic_updater_node
+    network_mode: host
+    privileged: true
+    restart: unless-stopped
+    
+    volumes:
+      # Mount sysfs for hwmon access (read-only)
+      - /sys/class/hwmon:/sys/class/hwmon:ro
+      # Optional: Mount custom config
+      # - ./config/custom_config.yaml:/config/config.yaml:ro
+    
+    environment:
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+    
+    # Override default command with custom config
+    # command: >
+    #   ros2 launch hwmon_diagnostic_updater
+    #   hwmon_diagnostic_updater.launch.py
+    #   params_file:=/config/config.yaml
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# Usage:
+# docker-compose up -d          # Start in background
+# docker-compose logs -f        # View logs
+# docker-compose down           # Stop and remove
+# docker-compose restart        # Restart service
