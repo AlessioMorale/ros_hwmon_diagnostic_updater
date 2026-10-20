@@ -3,7 +3,7 @@
 <package format="3">
   <name>hwmon_diagnostic_updater</name>
   <version>0.0.1</version>
-  <description>ROS 2 hwmon sysfs metrics reader with diagnostic publishing</description>
+  <description>Slamming Works ROS 2 hwmon sysfs reader with diagnostic publishing</description>
   <maintainer email="alessiomorale@gmail.com">Alessio Morale</maintainer>
   <license>MIT</license>
 
