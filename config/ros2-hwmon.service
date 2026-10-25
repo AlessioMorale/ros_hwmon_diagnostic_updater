@@ -27,7 +27,7 @@ PrivateTmp=true
 
 # Resource limits
 LimitNOFILE=65536
-MemoryLimit=512M
+MemoryMax=512M
 
 [Install]
 WantedBy=multi-user.target
